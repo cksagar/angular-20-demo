@@ -15,7 +15,7 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -47,12 +47,46 @@ jobs:
             echo "Environment: Development (Fallback/PR)"
           fi
 
+      - name: Check Formatting
+        run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
+
       - name: Build
         run: npm run build -- --configuration=${{ env.ENV_NAME }}
 
       - name: Test
         # Run tests in headless Chrome
-        # We don't necessarily need different test configurations for environments, 
-        # but you could add them if needed. 
+        # We don't necessarily need different test configurations for environments,
+        # but you could add them if needed.
         # --watch=false is critical for CI to finish.
         run: npm run test -- --watch=false --browsers=ChromeHeadless
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: distribution
+          path: dist/angular20-demo
+
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: distribution
+          path: dist/angular20-demo
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist/angular20-demo
