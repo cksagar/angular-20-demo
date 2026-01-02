@@ -57,11 +57,8 @@ jobs:
         run: npm run build -- --configuration=${{ env.ENV_NAME }}
 
       - name: Test
-        # Run tests in headless Chrome
-        # We don't necessarily need different test configurations for environments,
-        # but you could add them if needed.
-        # --watch=false is critical for CI to finish.
-        run: npm run test -- --watch=false --browsers=ChromeHeadless
+        # Run tests with jsdom (faster, no browser download needed)
+        run: npm run test -- --watch=false
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
