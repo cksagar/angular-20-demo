@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - qa
+      - develop
+  pull_request:
+    branches:
+      - main
+      - qa
+      - develop
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Determine Environment
+        id: env
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "ENV_NAME=production" >> $GITHUB_ENV
+            echo "Environment: Production"
+          elif [[ "${{ github.ref }}" == "refs/heads/qa" ]]; then
+            echo "ENV_NAME=qa" >> $GITHUB_ENV
+            echo "Environment: QA"
+          elif [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
+            echo "ENV_NAME=development" >> $GITHUB_ENV
+            echo "Environment: Development"
+          else
+            # For Pull Requests or other branches, default to development build to catch errors
+            echo "ENV_NAME=development" >> $GITHUB_ENV
+            echo "Environment: Development (Fallback/PR)"
+          fi
+
+      - name: Build
+        run: npm run build -- --configuration=${{ env.ENV_NAME }}
+
+      - name: Test
+        # Run tests in headless Chrome
+        # We don't necessarily need different test configurations for environments, 
+        # but you could add them if needed. 
+        # --watch=false is critical for CI to finish.
+        run: npm run test -- --watch=false --browsers=ChromeHeadless

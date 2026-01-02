@@ -44,6 +44,21 @@
               ],
               "outputHashing": "all"
             },
+            "qa": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
             "development": {
               "optimization": false,
               "extractLicenses": false,
@@ -57,6 +72,9 @@
           "configurations": {
             "production": {
               "buildTarget": "angular20-demo:build:production"
+            },
+            "qa": {
+              "buildTarget": "angular20-demo:build:qa"
             },
             "development": {
               "buildTarget": "angular20-demo:build:development"
