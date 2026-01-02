@@ -1,0 +1,51 @@
+.user-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.user-card {
+  max-width: 400px;
+  width: 100%;
+}
+
+.user-avatar {
+  background-color: #e3f2fd;
+  /* blue-50 approx */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-icon {
+  color: #1e88e5;
+  /* blue-600 approx */
+}
+
+.search-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.status-box {
+  padding: 16px;
+  background-color: rgba(227, 242, 253, 0.5);
+  /* blue-50/50 */
+  border: 1px solid #bbdefb;
+  /* blue-100 */
+  border-radius: 8px;
+  text-align: center;
+}
+
+.status-text {
+  color: #1565c0;
+  /* blue-800 */
+  font-weight: 500;
+  margin: 0;
+}

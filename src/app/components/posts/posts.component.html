@@ -1,1 +1,16 @@
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, architecto esse molestiae labore soluta facere rem voluptate. Atque cupiditate repudiandae, quia debitis dolor minima fuga temporibus asperiores unde, quaerat soluta.
+<div class="posts-container">
+  @if (isLoading()) {
+    <p>Loading posts...</p>
+  } @else {
+    @if (posts().length > 0) {
+      @for (post of posts(); track post.id) {
+        <div class="post-item">
+          <h3>{{ post.title }}</h3>
+          <p>{{ post.body }}</p>
+        </div>
+      }
+    } @else {
+      <p>No posts available</p>
+    }
+  }
+</div>
