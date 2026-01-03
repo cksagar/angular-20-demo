@@ -3,14 +3,9 @@ name: CI
 on:
   push:
     branches:
-      - main
-      - QA
       - DEV
-  pull_request:
-    branches:
-      - main
       - QA
-      - DEV
+      - main
 
 jobs:
   build-and-test:
