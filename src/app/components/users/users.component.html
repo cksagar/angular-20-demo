@@ -1,9 +1,6 @@
 <div class="user-container">
   <mat-card class="user-card">
     <mat-card-header>
-      <div mat-card-avatar class="user-avatar">
-        <mat-icon class="avatar-icon">person</mat-icon>
-      </div>
       <mat-card-title>User Details</mat-card-title>
       <mat-card-subtitle>Search for a user by ID</mat-card-subtitle>
     </mat-card-header>
@@ -12,19 +9,29 @@
       <div class="search-section">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>User ID</mat-label>
-          <mat-icon matPrefix>search</mat-icon>
           <input
             matInput
             type="text"
             placeholder="Enter user ID..."
             [formControl]="searchUser"
-            (change)="getUserDetails()"
           />
         </mat-form-field>
-
+        <button mat-raised-button color="primary" (click)="getUserDetails(searchUser.value)">
+          Fetch User
+        </button>
         <div class="status-box">
-          <p class="status-text">User works!</p>
+         @if(userDetails()) {
+        <div class="user-info">
+            <h3>User Information:</h3>
+            <p><strong>Name:</strong> {{ userDetails()?.name }}</p>
+            <p><strong>Username:</strong> {{ userDetails()?.username }}</p>
+            <p><strong>Email:</strong> {{ userDetails()?.email }}</p>
+            <p><strong>Phone:</strong> {{ userDetails()?.phone }}</p>
+            <p><strong>Website:</strong> {{ userDetails()?.website }}</p>
         </div>
+
+         }
+         </div>
       </div>
     </mat-card-content>
   </mat-card>

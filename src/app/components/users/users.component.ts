@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MasterService } from '../../services/master.service';
 import { MatCardModule } from '@angular/material/card';
@@ -6,9 +6,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { User } from './user.model';
 
 @Component({
-  selector: 'app-user',
+  selector: 'app-users',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -18,20 +19,24 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatIconModule,
   ],
-  templateUrl: './user.component.html',
-  styleUrl: './user.component.scss',
+  templateUrl: './users.component.html',
+  styleUrl: './users.component.scss',
 })
-export class UserComponent {
+export class UsersComponent {
   searchUser = new FormControl();
+
+
+  userDetails = signal<User | null>(null);
+
 
   private masterService = inject(MasterService);
 
-  getUserDetails() {
-    const userId = Number(this.searchUser.value);
+  getUserDetails(userId: number) {
     if (!userId) return;
 
-    this.masterService.getUserDetails(userId).subscribe((data) => {
+    this.masterService.getUserById(userId).subscribe((data) => {
       console.log('user details', data);
+      this.userDetails.set(data);
     });
   }
 }

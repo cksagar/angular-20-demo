@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Post } from '../components/posts/posts.model';
-import { User } from '../components/user/user.model';
+import { User } from '../components/users/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,11 @@ export class MasterService {
     return this.http.get<Post[]>('https://jsonplaceholder.typicode.com/posts');
   }
 
-  getUserDetails(id: number) {
-    return this.http.get<User>('https://jsonplaceholder.typicode.com/users/' + id);
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>('https://jsonplaceholder.typicode.com/users');
+  }
+
+  getUserById(userId:number): Observable<User>{
+    return this.http.get<User>(`https://jsonplaceholder.typicode.com/users/${userId}`);
   }
 }

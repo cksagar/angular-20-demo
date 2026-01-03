@@ -1,10 +1,10 @@
 .app-toolbar {
-  background-color: #1e1e1e !important;
-  color: #e0e0e0;
+  background-color: #ffffff !important;
+  color: rgba(0, 0, 0, 0.87);
   height: 48px;
   min-height: 48px;
   font-size: 14px;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid #e0e0e0;
   padding: 0 16px;
   display: flex !important;
   justify-content: space-between;
@@ -18,13 +18,13 @@
 }
 
 .logo-link {
-  color: #9ca3af;
+  color: #374151;
   text-decoration: none;
   font-weight: 500;
   font-size: 16px;
 
   &:hover {
-    color: white;
+    color: rgba(0, 0, 0, 0.87);
   }
 }
 
@@ -33,14 +33,14 @@
   gap: 8px;
 
   a[mat-button] {
-    color: #e0e0e0;
+    color: rgba(0, 0, 0, 0.87);
     font-weight: 400;
     line-height: 36px;
     height: 36px;
 
     &.active-link,
     &:hover {
-      color: white;
+      color: rgba(0, 0, 0, 0.95);
     }
   }
 }
