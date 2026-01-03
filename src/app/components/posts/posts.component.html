@@ -1,16 +1,16 @@
 <div class="posts-container">
   @if (isLoading()) {
-  <p>Loading posts...</p>
+    <p>Loading posts...</p>
   } @else {
-  @if (posts().length > 0) {
-  @for (post of posts(); track post.id) {
-  <div class="post-item">
-    <div class="post-title">{{ post.title }}</div>
-    <div class="post-body">{{ post.body }}</div>
-  </div>
-  }
-  } @else {
-  <p>No posts available</p>
-  }
+    @if (posts().length > 0) {
+      @for (post of posts(); track post.id) {
+        <div class="post-item">
+          <div class="post-title">{{ post.title }}</div>
+          <div class="post-body">{{ post.body }}</div>
+        </div>
+      }
+    } @else {
+      <p>No posts available</p>
+    }
   }
 </div>

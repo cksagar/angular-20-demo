@@ -20,7 +20,7 @@ export class MasterService {
     return this.http.get<User[]>('https://jsonplaceholder.typicode.com/users');
   }
 
-  getUserById(userId:number): Observable<User>{
+  getUserById(userId: number): Observable<User> {
     return this.http.get<User>(`https://jsonplaceholder.typicode.com/users/${userId}`);
   }
 }

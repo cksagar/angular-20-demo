@@ -25,9 +25,7 @@ import { User } from './user.model';
 export class UsersComponent {
   searchUser = new FormControl();
 
-
   userDetails = signal<User | null>(null);
-
 
   private masterService = inject(MasterService);
 
