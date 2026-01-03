@@ -1,0 +1,24 @@
+# CODEOWNERS - Simplified for Small Teams
+# 
+# This file ensures the Architect Lead reviews critical infrastructure changes.
+# For a small team, we only protect CI/CD and configuration files.
+# Component files can be reviewed by anyone on the team.
+
+# =============================================================================
+# CI/CD WORKFLOWS - Architect approval required
+# =============================================================================
+# Prevents unauthorized changes to deployment pipeline
+/.github/workflows/ @cksagar
+
+# =============================================================================
+# CRITICAL CONFIGURATION - Architect approval required
+# =============================================================================
+# Protects build system and dependencies
+/package.json @cksagar
+/angular.json @cksagar
+
+# =============================================================================
+# EVERYTHING ELSE - Any team member can review
+# =============================================================================
+# Components, services, and other code can be reviewed by anyone
+# No specific owner assigned - promotes team collaboration

@@ -1,0 +1,25 @@
+<mat-toolbar class="app-toolbar">
+  <!-- Left Side: Logo and Links -->
+  <div class="toolbar-left">
+    <!-- Logo -->
+    <a routerLink="/" class="logo-link">Logo</a>
+
+    <!-- Navigation Links -->
+    <div class="nav-links">
+      <a mat-button routerLink="/posts" routerLinkActive="active-link">Posts</a>
+      <a mat-button routerLink="/users" routerLinkActive="active-link">Users</a>
+    </div>
+  </div>
+
+  <!-- Spacer to push controls to the right -->
+  <span class="spacer"></span>
+
+  <!-- Right Side: Controls -->
+  <div class="toolbar-right"></div>
+</mat-toolbar>
+
+<main class="w-full pt-14 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-screen bg-white">
+  <div class="animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
+    <router-outlet />
+  </div>
+</main>

@@ -1,21 +1,26 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-
-
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Post } from '../components/posts/posts.model';
+import { User } from '../components/users/user.model';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class MasterService {
+  private userDetails = new Map<number, Observable<User>>();
 
+  private http = inject(HttpClient);
 
-    constructor(private http : HttpClient){
-    
-    }
+  getPosts(): Observable<Post[]> {
+    return this.http.get<Post[]>('https://jsonplaceholder.typicode.com/posts');
+  }
 
-    getUsers(){
-       return this.http.get('https://jsonplaceholder.typicode.com/posts')
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>('https://jsonplaceholder.typicode.com/users');
+  }
 
-
-    }
+  getUserById(userId: number): Observable<User> {
+    return this.http.get<User>(`https://jsonplaceholder.typicode.com/users/${userId}`);
+  }
 }

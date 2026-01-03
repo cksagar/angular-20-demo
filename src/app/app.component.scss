@@ -1,0 +1,81 @@
+.app-toolbar {
+  background-color: #ffffff !important;
+  color: rgba(0, 0, 0, 0.87);
+  height: 48px;
+  min-height: 48px;
+  font-size: 14px;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0 16px;
+  display: flex !important;
+  justify-content: space-between;
+}
+
+.toolbar-left,
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo-link {
+  color: #374151;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+
+  &:hover {
+    color: rgba(0, 0, 0, 0.87);
+  }
+}
+
+.nav-links {
+  display: flex;
+  gap: 8px;
+
+  a[mat-button] {
+    color: rgba(0, 0, 0, 0.87);
+    font-weight: 400;
+    line-height: 36px;
+    height: 36px;
+
+    &.active-link,
+    &:hover {
+      color: rgba(0, 0, 0, 0.95);
+    }
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.role-select {
+  background-color: #9ca3af;
+  color: black;
+  border: none;
+  border-radius: 2px;
+  padding: 4px 8px;
+  height: 32px;
+  font-size: 14px;
+  outline: none;
+}
+
+.admin-btn {
+  background-color: #d97706 !important;
+  /* amber-600 */
+  color: black !important;
+  height: 32px;
+  line-height: normal;
+  border-radius: 2px !important;
+  padding: 0 16px !important;
+}
+
+.logoff-btn {
+  background-color: #1d4ed8 !important;
+  /* blue-700 */
+  color: white !important;
+  height: 32px;
+  line-height: normal;
+  border-radius: 2px !important;
+  padding: 0 16px !important;
+}
