@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MasterService } from '../../services/master.service';
 import { MatCardModule } from '@angular/material/card';
@@ -7,6 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { User } from './user.model';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { retry } from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -28,13 +30,22 @@ export class UsersComponent {
   userDetails = signal<User | null>(null);
 
   private masterService = inject(MasterService);
-
+  private destroy$ = inject(DestroyRef);
   getUserDetails(userId: number) {
     if (!userId) return;
 
-    this.masterService.getUserById(userId).subscribe((data) => {
-      console.log('user details', data);
-      this.userDetails.set(data);
-    });
+    this.masterService
+      .getUserById(userId)
+      .pipe(retry(3), takeUntilDestroyed(this.destroy$))
+      .subscribe({
+        next: (data: User) => {
+          console.log('Fetched user details:', data);
+          this.userDetails.set(data);
+        },
+        error: (err: Error) => {
+          console.log('Error fetching user details:', err);
+          this.userDetails.set(null);
+        },
+      });
   }
 }
