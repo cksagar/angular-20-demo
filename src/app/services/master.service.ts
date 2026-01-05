@@ -25,7 +25,7 @@ export class MasterService {
     return this.http.get<User>(`https://jsonplaceholder.typicode.com/users/${userId}`);
   }
 
-  searchProducts(query:string): Observable<Product> {
+  searchProducts(query: string): Observable<Product> {
     return this.http.get<Product>(`https://dummyjson.com/products/search?q=${query}`);
- }
+  }
 }

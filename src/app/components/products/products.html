@@ -2,9 +2,9 @@
 <input type="text" placeholder="type here..." [formControl]="searchControl" />
 
 <ul>
-  @if(productsData){
-    @for(item of productsData.products; track $index) {
-      <li>{{ $index + 1 }} - {{item.title}} - {{item.price}}</li>
+  @if (productsData) {
+    @for (item of productsData.products; track $index) {
+      <li>{{ $index + 1 }} - {{ item.title }} - {{ item.price }}</li>
     }
   }
 </ul>

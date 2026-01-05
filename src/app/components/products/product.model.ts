@@ -1,4 +1,3 @@
-
 export interface ProductItem {
   id: number;
   title: string;
@@ -7,8 +6,8 @@ export interface ProductItem {
 }
 
 export interface Product {
-  skip:number;
-  limit:number;
-  total:number;
+  skip: number;
+  limit: number;
+  total: number;
   products: ProductItem[];
 }

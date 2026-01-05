@@ -30,7 +30,7 @@ export class UsersComponent {
   userDetails = signal<User | null>(null);
 
   private masterService = inject(MasterService);
-  private destroy$ = inject(DestroyRef)
+  private destroy$ = inject(DestroyRef);
   getUserDetails(userId: number) {
     if (!userId) return;
 
