@@ -14,7 +14,6 @@ import Aura from '@primeuix/themes/aura';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
