@@ -33,12 +33,11 @@ jobs:
           node-version: '22'
           cache: 'npm'
 
-      - name: Enable optional dependencies
-        run: npm config set optional true
+      - name: Clean npm cache
+        run: npm cache clean --force
 
-      # 3️⃣ Install dependencies
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --include=optional
 
       # 4️⃣ Determine environment
       - name: Determine Environment
