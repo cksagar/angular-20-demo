@@ -38,7 +38,6 @@ export class AuthService {
     return of('User registered successfully').pipe(delay(1000));
   }
 
-
   // Replace the credential check with your real logic
   login(email: string, password: string): boolean {
     const valid = email === 'admin' && password === 'admin'; // demo check
