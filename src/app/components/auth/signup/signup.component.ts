@@ -29,7 +29,8 @@ export class SignupComponent {
     }
     console.log('Signup form submitted');
     console.log(this.signupForm.value);
-    this.authService.signup({
+    this.authService
+      .signup({
         name: this.signupForm.value.name!,
         email: this.signupForm.value.email!,
         password: this.signupForm.value.password!,

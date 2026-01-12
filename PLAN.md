@@ -1,6 +1,7 @@
 # Implementation Plan — Login, Posts, Session Persistence
 
 ## Goal
+
 - Always land on the `Login` page.
 - After successful login, show the `Posts` component.
 - Persist authenticated state in `sessionStorage` so the user does not need to re-login during the same browser session.
@@ -8,6 +9,7 @@
 ---
 
 ## High-level steps
+
 1. Audit existing routing and auth code ✅
    - Files: `src/app/app.routes.ts`, `src/app/services/auth.service.ts`, `src/app/components/auth/login/login.component.ts`, `src/app/app.config.ts`
 2. Fix `AuthService` logic and add session persistence 🔧
@@ -38,6 +40,7 @@
 ---
 
 ## Files to be added/modified
+
 - Modify: `src/app/services/auth.service.ts` (fix login logic + sessionStorage helpers)
 - Modify: `src/app/app.routes.ts` (add default/wildcard redirects, add `canActivate` for posts)
 - Add: `src/app/guards/auth.guard.ts`
@@ -47,6 +50,7 @@
 ---
 
 ## Time estimate
+
 - Implement core logic and routing: ~30–60 minutes
 - Add guard and wiring: ~15–30 minutes
 - Add basic tests and run them: ~30 minutes
@@ -55,6 +59,7 @@
 ---
 
 ## Notes / Tips
+
 - Use `sessionStorage` instead of `localStorage` to keep session scoped to browser tab lifetime (user requested same-session persistence).
 - Keep user data only in-memory (for this demo app) and store only a boolean/session flag in `sessionStorage` — never store plain passwords.
 - Add guard unit tests that mock `AuthService` return values to assert both branches.
