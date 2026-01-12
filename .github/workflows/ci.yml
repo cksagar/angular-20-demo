@@ -6,47 +6,65 @@ on:
       - DEV
       - QA
       - main
+  pull_request:
+    branches:
+      - DEV
+      - QA
+      - main
 
+# 🔐 Default: NO write permissions
 permissions:
-  contents: write   # 🔥 REQUIRED for auto-commit
+  contents: read
 
 jobs:
   build-and-test:
+    name: Build & Test
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      # 1️⃣ Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      # 2️⃣ Setup Node.js (LTS)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
-      - run: npm ci
+      # 3️⃣ Install dependencies
+      - name: Install dependencies
+        run: npm ci
 
-      # Auto-format ONLY on DEV
-      - name: Run Prettier
-        if: github.ref == 'refs/heads/DEV'
-        run: npm run format
+      # 4️⃣ Determine environment
+      - name: Determine Environment
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "ENV_NAME=production" >> $GITHUB_ENV
+          elif [[ "${{ github.ref }}" == "refs/heads/QA" ]]; then
+            echo "ENV_NAME=qa" >> $GITHUB_ENV
+          else
+            echo "ENV_NAME=development" >> $GITHUB_ENV
+          fi
 
-      - name: Commit formatted code
-        if: github.ref == 'refs/heads/DEV'
-        uses: EndBug/add-and-commit@v9
-        with:
-          message: "chore: format with Prettier"
-
-      - name: Check Formatting
+      # 5️⃣ Prettier check (NO auto-fix)
+      - name: Prettier check
         run: npm run format:check
 
+      # 6️⃣ Lint
       - name: Lint
         run: npm run lint
 
+      # 7️⃣ Build
       - name: Build
         run: npm run build -- --configuration=${{ env.ENV_NAME }}
 
+      # 8️⃣ Test
       - name: Test
         run: npm run test -- --watch=false
 
+      # 9️⃣ Upload build artifact
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -54,19 +72,27 @@ jobs:
           path: dist/angular20-demo
 
   deploy:
+    name: Deploy (main only)
     needs: build-and-test
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
+    # 🔐 Write permission ONLY here
+    permissions:
+      contents: write
 
-      - uses: actions/download-artifact@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
         with:
           name: distribution
           path: dist/angular20-demo
 
-      - uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist/angular20-demo
