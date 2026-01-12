@@ -8,20 +8,26 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
+    "format:check": "prettier --check \"**/*.{ts,js,json,css,scss,html,md}\"",
     "format": "prettier --write \"**/*.{ts,js,json,css,scss,html,md}\"",
-    "format:check": "prettier --check \"**/*.{ts,js,json,css,scss,html,md}\""
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{ts,js,json,css,scss,html,md}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "prettier": {
     "printWidth": 100,
+    "tabWidth": 2,
+    "useTabs": false,
+    "semi": true,
     "singleQuote": true,
-    "overrides": [
-      {
-        "files": "*.html",
-        "options": {
-          "parser": "angular"
-        }
-      }
-    ]
+    "trailingComma": "all",
+    "bracketSpacing": true,
+    "arrowParens": "always",
+    "endOfLine": "lf"
   },
   "private": true,
   "packageManager": "npm@10.9.3",
@@ -47,7 +53,9 @@
     "@vitest/browser-playwright": "^4.0.16",
     "angular-eslint": "21.1.0",
     "eslint": "^9.39.1",
+    "husky": "^9.1.7",
     "jsdom": "^27.1.0",
+    "lint-staged": "^16.2.7",
     "playwright": "^1.57.0",
     "prettier": "^3.7.4",
     "typescript": "~5.9.2",
