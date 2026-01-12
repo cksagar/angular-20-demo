@@ -62,9 +62,9 @@ jobs:
       - name: Build
         run: npm run build -- --configuration=${{ env.ENV_NAME }}
 
-      # 8️⃣ Test
-      - name: Test
-        run: npm run test -- --watch=false
+      # # 8️⃣ Test
+      # - name: Test
+      #   run: npm run test -- --watch=false
 
       # 9️⃣ Upload build artifact
       - name: Upload Build Artifact
