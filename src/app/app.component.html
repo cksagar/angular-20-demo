@@ -20,7 +20,10 @@
 </mat-toolbar>
 
 <main class="w-full pt-14 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-screen bg-white">
-  <div class="animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
+  <div
+    class="router-outlet-main-container animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out"
+  >
     <router-outlet />
+    <p-toast position="top-right"></p-toast>
   </div>
 </main>

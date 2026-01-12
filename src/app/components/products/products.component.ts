@@ -8,8 +8,8 @@ import { Product } from './product.model';
   selector: 'app-products',
   imports: [ReactiveFormsModule],
   standalone: true,
-  templateUrl: './products.html',
-  styleUrl: './products.scss',
+  templateUrl: './products.component.html',
+  styleUrl: './products.component.scss',
 })
 export class Products implements OnDestroy {
   searchControl = new FormControl();

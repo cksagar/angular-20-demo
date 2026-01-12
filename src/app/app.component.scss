@@ -79,3 +79,11 @@
   border-radius: 2px !important;
   padding: 0 16px !important;
 }
+
+.router-outlet-main-container {
+  min-height: calc(100vh - 64px - 48px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+}
