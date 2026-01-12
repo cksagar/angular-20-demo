@@ -7,48 +7,33 @@ on:
       - QA
       - main
 
+permissions:
+  contents: write   # 🔥 REQUIRED for auto-commit
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'npm'
 
+      - run: npm ci
 
+      # Auto-format ONLY on DEV
+      - name: Run Prettier
+        if: github.ref == 'refs/heads/DEV'
+        run: npm run format
 
-      - name: Install dependencies
-        run: npm ci
-
-      - run: npm run format
       - name: Commit formatted code
+        if: github.ref == 'refs/heads/DEV'
         uses: EndBug/add-and-commit@v9
         with:
           message: "chore: format with Prettier"
-
-      - name: Determine Environment
-        id: env
-        run: |
-          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-            echo "ENV_NAME=production" >> $GITHUB_ENV
-            echo "Environment: Production"
-          elif [[ "${{ github.ref }}" == "refs/heads/QA" ]]; then
-            echo "ENV_NAME=qa" >> $GITHUB_ENV
-            echo "Environment: QA"
-          elif [[ "${{ github.ref }}" == "refs/heads/DEV" ]]; then
-            echo "ENV_NAME=development" >> $GITHUB_ENV
-            echo "Environment: Development"
-          else
-            # For Pull Requests or other branches, default to development build to catch errors
-            echo "ENV_NAME=development" >> $GITHUB_ENV
-            echo "Environment: Development (Fallback/PR)"
-          fi
 
       - name: Check Formatting
         run: npm run format:check
@@ -60,7 +45,6 @@ jobs:
         run: npm run build -- --configuration=${{ env.ENV_NAME }}
 
       - name: Test
-        # Run tests with jsdom (faster, no browser download needed)
         run: npm run test -- --watch=false
 
       - name: Upload Build Artifact
@@ -71,22 +55,18 @@ jobs:
 
   deploy:
     needs: build-and-test
-    runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    runs-on: ubuntu-latest
 
-      - name: Download Build Artifact
-        uses: actions/download-artifact@v4
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
         with:
           name: distribution
           path: dist/angular20-demo
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist/angular20-demo
